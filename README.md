@@ -6,7 +6,7 @@
 
 Video meetings with live captions and AI-generated notes. Built from scratch with React, Node.js, MongoDB, Socket.IO and WebRTC.
 
-[Live demo](https://YOUR-APP.vercel.app) · [Report a bug](https://github.com/YOUR_GITHUB_USERNAME/meetsphere/issues) · [Request a feature](https://github.com/YOUR_GITHUB_USERNAME/meetsphere/issues)
+[Live demo](https://meet-sphere-alpha.vercel.app/) · [Report a bug](https://github.com/Irfan-aman/meetsphere/issues) · [Request a feature](https://github.com/Irfan-aman/meetsphere/issues)
 
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat-square&logo=vite&logoColor=white)
@@ -51,6 +51,7 @@ It started as a college project to learn real-time communication end to end: aut
 ## Features
 
 **Meetings**
+
 - Create a meeting in one click and share the code or link. Guests can join with just a display name; an account is needed to host a meeting and to see your meeting history on the dashboard.
 - Pre-join lobby with camera preview and mic/camera toggles.
 - Peer-to-peer video and audio with WebRTC (up to 8 people per room by default).
@@ -59,19 +60,23 @@ It started as a college project to learn real-time communication end to end: aut
 - Graceful fallback when the camera or microphone is blocked: audio-only, or watch and chat only.
 
 **Live captions**
+
 - Speech-to-text in the browser (Web Speech API), shown live to everyone who has captions on.
 - Final lines are saved as the meeting transcript.
 - Works in Chrome, Edge and Safari. See [Limitations](#limitations-and-roadmap) for browsers that do not support it.
 
 **AI notes**
+
 - One click generates a summary, key decisions and action items from the transcript and chat.
 - Structured JSON output from Gemini, validated on the server. Unchanged meetings return the cached summary instead of spending quota again.
 - Copy the notes as Markdown.
 
 **Dashboard**
+
 - Your recent meetings with their transcript, chat log and notes, plus a Rejoin button.
 
 **Built to be safe**
+
 - JWT sessions, bcrypt password hashing, input validation, rate limiting and a CORS allow-list.
 - Notes, transcripts and chat are visible only to the host and people who joined.
 - The Gemini key stays on the server and meeting text is treated as data, not instructions.
@@ -101,16 +106,16 @@ It started as a college project to learn real-time communication end to end: aut
 
 ## Tech stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 18, Vite, React Router, Axios, Socket.IO client, Lucide icons |
-| Realtime media | WebRTC (peer-to-peer mesh), STUN, optional TURN |
-| Realtime signaling | Socket.IO |
-| Backend | Node.js 18+, Express, Zod, Helmet, express-rate-limit |
-| Database | MongoDB with Mongoose (MongoDB Atlas) |
-| Auth | JSON Web Tokens, bcryptjs |
-| AI | Google Gemini API (structured JSON output), browser Web Speech API for captions |
-| Hosting | Vercel (frontend), Render (backend), MongoDB Atlas (database) |
+| Layer              | Technology                                                                      |
+| ------------------ | ------------------------------------------------------------------------------- |
+| Frontend           | React 18, Vite, React Router, Axios, Socket.IO client, Lucide icons             |
+| Realtime media     | WebRTC (peer-to-peer mesh), STUN, optional TURN                                 |
+| Realtime signaling | Socket.IO                                                                       |
+| Backend            | Node.js 18+, Express, Zod, Helmet, express-rate-limit                           |
+| Database           | MongoDB with Mongoose (MongoDB Atlas)                                           |
+| Auth               | JSON Web Tokens, bcryptjs                                                       |
+| AI                 | Google Gemini API (structured JSON output), browser Web Speech API for captions |
+| Hosting            | Vercel (frontend), Render (backend), MongoDB Atlas (database)                   |
 
 ## How it works
 
@@ -192,38 +197,40 @@ Open **http://localhost:5173**.
 
 ### Backend (`backend/.env`)
 
-| Variable | Required | Description |
-|---|---|---|
-| `MONGODB_URI` | Yes | MongoDB connection string, for example `mongodb+srv://USER:PASS@cluster0.xxxxx.mongodb.net/meetsphere?retryWrites=true&w=majority` |
-| `JWT_SECRET` | Yes | Long random string used to sign login tokens. The server refuses to start if it is missing or still the placeholder, and requires 24+ characters in production |
-| `CLIENT_URL` | Yes | Allowed frontend origin(s), comma-separated, no trailing slash. Default `http://localhost:5173` |
-| `GEMINI_API_KEY` | For AI notes | Gemini API key. Server-side only |
-| `GEMINI_MODEL` | For AI notes | Gemini model ID. Google retires models regularly (the code default `gemini-2.5-flash` is deprecated), so set this to a model that is currently available to your key. See [Getting your keys](#getting-your-keys) |
-| `MAX_PARTICIPANTS` | No | People per room. Default `8` (WebRTC mesh: keep this small) |
-| `PORT` | No | Default `5000`. Render sets this automatically |
-| `NODE_ENV` | No | Set to `production` when deployed |
-| `DNS_SERVERS` | No | Comma-separated DNS servers, for example `8.8.8.8,1.1.1.1`. Only needed if your network blocks MongoDB `+srv` lookups |
+| Variable           | Required     | Description                                                                                                                                                                                                       |
+| ------------------ | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `MONGODB_URI`      | Yes          | MongoDB connection string, for example `mongodb+srv://USER:PASS@cluster0.xxxxx.mongodb.net/meetsphere?retryWrites=true&w=majority`                                                                                |
+| `JWT_SECRET`       | Yes          | Long random string used to sign login tokens. The server refuses to start if it is missing or still the placeholder, and requires 24+ characters in production                                                    |
+| `CLIENT_URL`       | Yes          | Allowed frontend origin(s), comma-separated, no trailing slash. Default `http://localhost:5173`                                                                                                                   |
+| `GEMINI_API_KEY`   | For AI notes | Gemini API key. Server-side only                                                                                                                                                                                  |
+| `GEMINI_MODEL`     | For AI notes | Gemini model ID. Google retires models regularly (the code default `gemini-2.5-flash` is deprecated), so set this to a model that is currently available to your key. See [Getting your keys](#getting-your-keys) |
+| `MAX_PARTICIPANTS` | No           | People per room. Default `8` (WebRTC mesh: keep this small)                                                                                                                                                       |
+| `PORT`             | No           | Default `5000`. Render sets this automatically                                                                                                                                                                    |
+| `NODE_ENV`         | No           | Set to `production` when deployed                                                                                                                                                                                 |
+| `DNS_SERVERS`      | No           | Comma-separated DNS servers, for example `8.8.8.8,1.1.1.1`. Only needed if your network blocks MongoDB `+srv` lookups                                                                                             |
 
 ### Frontend (`frontend/.env`)
 
-| Variable | Required | Description |
-|---|---|---|
-| `VITE_API_URL` | Yes | Backend URL with no trailing slash, for example `http://localhost:5000` |
-| `VITE_TURN_URL` | No | TURN server URL for users on strict firewalls or mobile networks |
-| `VITE_TURN_USERNAME` | No | TURN username |
-| `VITE_TURN_CREDENTIAL` | No | TURN credential |
+| Variable               | Required | Description                                                             |
+| ---------------------- | -------- | ----------------------------------------------------------------------- |
+| `VITE_API_URL`         | Yes      | Backend URL with no trailing slash, for example `http://localhost:5000` |
+| `VITE_TURN_URL`        | No       | TURN server URL for users on strict firewalls or mobile networks        |
+| `VITE_TURN_USERNAME`   | No       | TURN username                                                           |
+| `VITE_TURN_CREDENTIAL` | No       | TURN credential                                                         |
 
 > Vite bakes these values in at build time. If you change one on Vercel, redeploy the frontend.
 
 ## Getting your keys
 
 **MongoDB Atlas**
+
 1. Create a free cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas).
 2. Database Access: add a database user. Avoid `@ : / ?` in the password, or URL-encode it.
 3. Network Access: add `0.0.0.0/0` (Render's IP addresses change on the free plan).
 4. Connect > Drivers: copy the connection string and add a database name before the `?`, for example `.../meetsphere?retryWrites=true&w=majority`.
 
 **Gemini API key and model**
+
 1. Create a key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
 2. Open the [model list](https://ai.google.dev/gemini-api/docs/models) and the [deprecations page](https://ai.google.dev/gemini-api/docs/deprecations), pick a current Flash-class model that is not scheduled for shutdown, and set its ID as `GEMINI_MODEL`.
 3. Test it: start the backend, finish a short meeting with at least 25 words of chat or captions, and click **Generate AI notes**. A "model was not found" error means the ID is wrong or retired.
@@ -274,35 +281,35 @@ STUN alone fails on some corporate and mobile networks. Create a TURN account wi
 
 ## Troubleshooting
 
-| Symptom | Fix |
-|---|---|
-| `querySrv ECONNREFUSED` when the backend starts | Your network or DNS blocks the `mongodb+srv` lookup. Set `DNS_SERVERS=8.8.8.8,1.1.1.1` in `backend/.env`, or use Atlas's non-SRV connection string (Connect > Drivers > Node.js, version "2.2.12 or later"). |
-| Backend exits with a MongoDB error | Check `MONGODB_URI` (password filled in, special characters URL-encoded) and Atlas Network Access. |
-| Backend exits with a `JWT_SECRET` message | Set a real secret. The placeholder from `.env.example` is rejected on purpose. |
-| "Cannot reach the server" | The Render service is asleep, or `VITE_API_URL` is wrong. Open `/api/health`. |
-| CORS or "Origin not allowed" | `CLIENT_URL` must exactly match your frontend origin (scheme and host, no trailing slash). |
-| `'vite' is not recognized` | Run `npm install` inside the `frontend` folder first. |
-| Backend keeps restarting in dev | If the project lives in a OneDrive-synced folder, sync touches `node_modules` and `node --watch` restarts. Move the project out of OneDrive, or use `npm start`. |
-| Video works on Wi-Fi but not mobile data | Add a TURN server (see above). |
-| Captions button disabled | The browser has no Web Speech API (for example Firefox). Use Chrome, Edge or Safari. |
-| "Captions need an internet connection in this browser" | The browser's speech service could not be reached. This happens in Brave, which blocks the speech service Chrome uses. Use Chrome or Edge, or check your connection. |
-| "AI notes are not configured" | `GEMINI_API_KEY` is missing on the server. |
-| "model was not found" | Update `GEMINI_MODEL` to a current model ID. |
-| "AI quota is used up" | Free-tier limit reached. Wait, or enable billing in Google AI Studio. |
-| "Not enough conversation to summarize" | The transcript plus chat needs roughly 25 words. Turn on captions or chat. |
+| Symptom                                                | Fix                                                                                                                                                                                                          |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `querySrv ECONNREFUSED` when the backend starts        | Your network or DNS blocks the `mongodb+srv` lookup. Set `DNS_SERVERS=8.8.8.8,1.1.1.1` in `backend/.env`, or use Atlas's non-SRV connection string (Connect > Drivers > Node.js, version "2.2.12 or later"). |
+| Backend exits with a MongoDB error                     | Check `MONGODB_URI` (password filled in, special characters URL-encoded) and Atlas Network Access.                                                                                                           |
+| Backend exits with a `JWT_SECRET` message              | Set a real secret. The placeholder from `.env.example` is rejected on purpose.                                                                                                                               |
+| "Cannot reach the server"                              | The Render service is asleep, or `VITE_API_URL` is wrong. Open `/api/health`.                                                                                                                                |
+| CORS or "Origin not allowed"                           | `CLIENT_URL` must exactly match your frontend origin (scheme and host, no trailing slash).                                                                                                                   |
+| `'vite' is not recognized`                             | Run `npm install` inside the `frontend` folder first.                                                                                                                                                        |
+| Backend keeps restarting in dev                        | If the project lives in a OneDrive-synced folder, sync touches `node_modules` and `node --watch` restarts. Move the project out of OneDrive, or use `npm start`.                                             |
+| Video works on Wi-Fi but not mobile data               | Add a TURN server (see above).                                                                                                                                                                               |
+| Captions button disabled                               | The browser has no Web Speech API (for example Firefox). Use Chrome, Edge or Safari.                                                                                                                         |
+| "Captions need an internet connection in this browser" | The browser's speech service could not be reached. This happens in Brave, which blocks the speech service Chrome uses. Use Chrome or Edge, or check your connection.                                         |
+| "AI notes are not configured"                          | `GEMINI_API_KEY` is missing on the server.                                                                                                                                                                   |
+| "model was not found"                                  | Update `GEMINI_MODEL` to a current model ID.                                                                                                                                                                 |
+| "AI quota is used up"                                  | Free-tier limit reached. Wait, or enable billing in Google AI Studio.                                                                                                                                        |
+| "Not enough conversation to summarize"                 | The transcript plus chat needs roughly 25 words. Turn on captions or chat.                                                                                                                                   |
 
 ## API reference
 
-| Method | Endpoint | Auth |
-|---|---|---|
-| POST | `/api/auth/signup`, `/api/auth/login`, `/api/auth/guest` | none |
-| GET | `/api/auth/me` | token |
-| POST | `/api/meetings` | account |
-| GET | `/api/meetings/mine` | account |
-| GET | `/api/meetings/:roomId` | none (title and host only) |
-| GET | `/api/meetings/:roomId/details` | host or participant |
-| POST | `/api/summarize/:roomId` | host or participant |
-| GET | `/api/health` | none |
+| Method | Endpoint                                                 | Auth                       |
+| ------ | -------------------------------------------------------- | -------------------------- |
+| POST   | `/api/auth/signup`, `/api/auth/login`, `/api/auth/guest` | none                       |
+| GET    | `/api/auth/me`                                           | token                      |
+| POST   | `/api/meetings`                                          | account                    |
+| GET    | `/api/meetings/mine`                                     | account                    |
+| GET    | `/api/meetings/:roomId`                                  | none (title and host only) |
+| GET    | `/api/meetings/:roomId/details`                          | host or participant        |
+| POST   | `/api/summarize/:roomId`                                 | host or participant        |
+| GET    | `/api/health`                                            | none                       |
 
 **Socket.IO events:** `room:join`, `room:leave`, `room:participant-joined`, `room:participant-left`, `webrtc:offer`, `webrtc:answer`, `webrtc:ice-candidate`, `chat:message`, `caption:interim`, `caption:line`, `media:state`, `reaction`.
 
@@ -350,6 +357,7 @@ meetsphere/
 ## Limitations and roadmap
 
 **Current limitations**
+
 - **Mesh WebRTC:** every participant sends video to every other participant, so rooms are capped at 8 by default and quality drops as the room grows.
 - **Single server instance:** live room state is kept in memory. Running several instances needs the Socket.IO Redis adapter.
 - **Captions** use the browser's Web Speech API, which sends audio to the browser vendor's speech service. They work in Chrome, Edge and Safari, but not in Firefox, and not in Brave (which blocks that service). Accuracy varies by accent and microphone.
@@ -357,6 +365,7 @@ meetsphere/
 - No recordings and no host moderation tools yet (the host is shown with a badge only).
 
 **Ideas for next steps**
+
 - [ ] Server-side speech-to-text so captions work in every browser
 - [ ] Move to an SFU (LiveKit or mediasoup) for larger rooms
 - [ ] Host controls: mute or remove participants, lock the room
